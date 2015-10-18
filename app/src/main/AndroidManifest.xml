@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    package="net.vidainc.vidahome"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="ANDROID.PERMISSION.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+
+    <permission
+        android:name="net.vidainc.vidahome.permission.C2D_MESSAGE"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="net.vidainc.vidahome.permission.C2D_MESSAGE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+        <activity
+            android:name="net.vidainc.vidahome.frontend.activities.MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <provider
+            android:name=".database.BeaconProvider"
+            android:authorities="@string/content_authority"
+            android:exported="false"
+            android:syncable="true"/>
+
+        <activity
+            android:name="net.vidainc.vidahome.frontend.activities.UserSettingActivity"
+            android:label="@string/UserSettingActivity" >
+        </activity>
+        <activity
+            android:name="net.vidainc.vidahome.frontend.activities.RoomMapActivity"
+            android:label="@string/title_activity_entered_room"
+            android:parentActivityName="net.vidainc.vidahome.frontend.activities.FloorMapActivity"
+            android:uiOptions="splitActionBarWhenNarrow" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.vidainc.vidahome.frontend.activities.FloorMapActivity" />
+        </activity>
+        <activity
+            android:name="net.vidainc.vidahome.frontend.activities.TrainingActivity"
+            android:label="@string/title_activity_training"
+            android:parentActivityName="net.vidainc.vidahome.frontend.activities.UserSettingActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.vidainc.vidahome.frontend.activities.UserSettingActivity" />
+        </activity>
+
+        <activity
+            android:name=".frontend.activities.SetupActivity"
+            android:label="@string/title_activity_entered_room"
+            android:parentActivityName=".frontend.activities.SetupActivity"
+            android:uiOptions="splitActionBarWhenNarrow" >
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".frontend.activities.SetupActivity" />
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+
+
+        <activity
+            android:name="net.vidainc.vidahome.frontend.activities.FloorMapActivity"
+            android:label="@string/title_activity_floor_map" >
+        </activity>
+        <activity
+            android:name="net.vidainc.vidahome.frontend.activities.LoginActivity"
+            android:label="@string/title_activity_login" >
+        </activity>
+
+        <service android:name="net.vidainc.vidahome.service.BeaconService"/>
+        <service android:name=".service.GcmIntentService"/>
+
+        <receiver android:name=".receivers.GcmBroadcastReceiver">
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <category android:name="com.example.gcm"/>
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
